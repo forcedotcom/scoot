@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<schema>
+    <!--  all default values, but specified explicitly. Note that max file size is 10G (10 * 1024 MB) -->
+    <table name="minimal"
+        maxFileSizeMB="10240" 
+        isReadOnly="false"
+        memStoreFlushSizeMB="128"
+        useDeferredLogFlush="false">
+        <columnFamilies>
+          <columnFamily name="minimalColumnFamily1"
+              maxVersions="3" 
+              blockSizeKB="64" 
+              blockCache="true" 
+              timeToLiveMS="2147483647" 
+              inMemory="false" 
+              bloomFilter="NONE" 
+              replicationScope="0">
+          </columnFamily>
+        </columnFamilies>
+    </table>
+</schema>

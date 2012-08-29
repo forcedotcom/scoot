@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema version="180.0">
+    <tables>
+        <table name="PHOENIX_TEST">
+            <pkColumns>
+                 <pkColumn>
+                    <column name="ORGANIZATION_ID" sqlType="CHAR" maxLength="15" fixedWidth="true" nullable="false"/>
+                 </pkColumn>
+                 <pkColumn>
+                    <column name="DATA_ID" sqlType="CHAR" maxLength="15" fixedWidth="true" nullable="false"/>
+                    <column name="KEY" sqlType="CHAR" maxLength="3" fixedWidth="true" nullable="false"/>
+                 </pkColumn>
+            </pkColumns>
+            <columnFamilies>
+                <columnFamily name="1">
+                    <column name="CREATED_BY" sqlType="CHAR" maxLength="15" fixedWidth="true" nullable="false"/>
+                    <column name="NAME" sqlType="VARCHAR2" maxLength="240" fixedWidth="false" nullable="true"/>
+                </columnFamily>
+                <columnFamily name="2">
+                    <column name="VAL1" sqlType="VARCHAR2" maxLength="765" fixedWidth="false" nullable="true"/>
+                </columnFamily>
+            </columnFamilies>
+        </table>
+    </tables>
+</schema>

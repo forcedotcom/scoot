@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<schema>
+    <!-- This file holds the "after" version of the schema for schema loader testing. -->
+
+    <!-- This table will be created by the script.  -->
+    <table name="createMe" 
+        maxFileSizeMB="256" 
+        isReadOnly="false"
+        memStoreFlushSizeMB="64"
+        useDeferredLogFlush="false"
+        owner="ivarley">
+        <key>
+            <keyPart name="createMeKeyPart1" type="String" length="15" inverted="false" />
+            <keyPart name="createMeKeyPart2" type="Timestamp" length="15" inverted="true"  />
+        </key>
+        <columnFamilies>
+	        <columnFamily name="createMeColumnFamily1" 
+	            maxVersions="3" 
+	            blockSizeKB="64" 
+	            blockCache="true" 
+	            timeToLiveMS="2147483647" 
+	            inMemory="false" 
+	            bloomFilter="NONE" 
+	            replicationScope="0">
+                <column name="createMeColumn1" type="String" />
+                <column name="createMeColumn2" type="Timestamp" />
+                <column name="createMeColumn3" type="Byte" />
+	        </columnFamily>
+        </columnFamilies>
+    </table>
+    
+
+    <!-- This table will be altered by the script.  --> 
+    <table name="alterMe" 
+        maxFileSizeMB="257" 
+        memStoreFlushSizeMB="65"
+        isReadOnly="false"
+        useDeferredLogFlush="false"
+        owner="ivarley2">
+        <key>
+            <keyPart name="alterMeKeyPart1" type="String" length="15" inverted="false" />
+            <keyPart name="alterMeKeyPart2" type="Timestamp" length="15" inverted="true"  />
+        </key>
+        <columnFamilies>
+	        <columnFamily name="alterMeColumnFamily1" 
+	            maxVersions="3" 
+	            blockSizeKB="65" 
+	            blockCache="true" 
+	            timeToLiveMS="2147483647" 
+	            inMemory="false" 
+	            bloomFilter="NONE" 
+	            replicationScope="0">
+                <column name="alterMeColumn1" type="String" />
+                <column name="alterMeColumn2" type="Timestamp" />
+                <column name="alterMeColumn3" type="Byte" />
+	        </columnFamily>
+        </columnFamilies>
+    </table>
+    
+    <!-- <table name="dropMe" /> doesn't exist, because we want to drop it. --> 
+
+    <!-- This table will be ignored by the script.  -->
+    <table name="ignoreMe" 
+        maxFileSizeMB="256" 
+        isReadOnly="false"
+        memStoreFlushSizeMB="64"
+        useDeferredLogFlush="false"
+        owner="ivarley">
+        <key>
+            <keyPart name="ignoreMeKeyPart1" type="String" length="15" inverted="false" />
+            <keyPart name="ignoreMeKeyPart2" type="Timestamp" length="15" inverted="true"  />
+        </key>
+        <columnFamilies>
+	        <columnFamily name="ignoreMeColumnFamily1" 
+	            maxVersions="3" 
+	            blockSizeKB="64" 
+	            blockCache="true" 
+	            timeToLiveMS="2147483647" 
+	            inMemory="false" 
+	            bloomFilter="NONE" 
+	            replicationScope="0">
+                <column name="ignoreMeColumn1" type="String" />
+                <column name="ignoreMeColumn2" type="Timestamp" />
+                <column name="ignoreMeColumn3" type="Byte" />
+	        </columnFamily>
+        </columnFamilies>
+    </table>
+    
+</schema>

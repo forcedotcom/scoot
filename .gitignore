@@ -1,0 +1,5 @@
+#Files that git should ignore
+target/
+.project
+.settings/
+.classpath

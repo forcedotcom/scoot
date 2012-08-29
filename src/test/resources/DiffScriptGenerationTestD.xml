@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<schema>
+
+    <!-- This table will be created by the script.  -->
+    <table name="createMe" 
+        maxFileSizeMB="256" 
+        isReadOnly="false"
+        memStoreFlushSizeMB="64"
+        useDeferredLogFlush="false"
+        owner="ivarley">
+        <key>
+            <keyPart name="createMeKeyPart1" type="String" length="15" inverted="false" />
+            <keyPart name="createMeKeyPart2" type="Timestamp" length="15" inverted="true"  />
+        </key>
+        <columnFamilies>
+          <columnFamily name="createMeColumnFamily1" 
+              maxVersions="3" 
+              blockSizeKB="64" 
+              blockCache="true" 
+              timeToLiveMS="2147483647" 
+              inMemory="false" 
+              bloomFilter="NONE" 
+              replicationScope="0">
+                <column name="createMeColumn1" type="String" />
+                <column name="createMeColumn2" type="Timestamp" />
+                <column name="createMeColumn3" type="Byte" />
+          </columnFamily>
+        </columnFamilies>
+    </table>
+
+</schema>
+   

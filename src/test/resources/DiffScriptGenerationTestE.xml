@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<schema>
+    <!--  uses all default values, implicitly -->
+    <table name="minimal">
+        <columnFamilies>
+          <columnFamily name="minimalColumnFamily1">
+          </columnFamily>
+        </columnFamilies>
+    </table>
+    
+</schema>
