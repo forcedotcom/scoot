@@ -163,7 +163,11 @@ public class Scoot {
     if (schemaName == null || schemaParser == null) return null;
     try {
       HBaseSchemaParser parser = (HBaseSchemaParser)Class.forName(schemaParser).newInstance();
-      parser.setResourceToParse(schemaName);
+      try {
+    	  parser.setResourceToParse(schemaName);
+      } catch (Exception e){
+          throw new ScootException("Unable to parse given resource using parser '" + schemaParser + "': " + schemaName);
+      }
       return parser.parse();
     } catch (Exception e) {
       throw new ScootException("Unable to instantiate supplied parser: " + schemaParser);

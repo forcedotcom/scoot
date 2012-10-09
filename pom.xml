@@ -21,6 +21,10 @@
 
     <!-- Build properties -->
     <unittest.include>**/*Test.java</unittest.include>
+    
+    <!-- Test properties; set these to be correct for your environment -->
+    <local.hbase.conf.dir>/tmp/localhbase/conf</local.hbase.conf.dir>
+    <local.hbase.shell.path>/home/ivarley/dev/tools/Linux/hbase/hbase-0.94.0-security/bin/</local.hbase.shell.path>
 
   </properties>
 
@@ -38,6 +42,10 @@
           <excludes>
             <exclude>**/*$*</exclude>
           </excludes>
+          <systemPropertyVariables>
+            <localHBaseConfDir>${local.hbase.conf.dir}</localHBaseConfDir>
+            <localHBaseShellPath>${local.hbase.shell.path}</localHBaseShellPath>
+          </systemPropertyVariables>
         </configuration>
       </plugin>
       <plugin>

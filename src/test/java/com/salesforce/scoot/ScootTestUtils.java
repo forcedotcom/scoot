@@ -37,6 +37,10 @@ import java.util.List;
 
 import junit.framework.Assert;
 import org.apache.commons.io.IOUtils;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.client.HBaseAdmin;
+
 import com.salesforce.scoot.Scoot;
 
 /**
@@ -50,10 +54,8 @@ public class ScootTestUtils {
   public final static String CLUSTER_PARSER = "com.salesforce.scoot.parser.HBaseClusterParser"; 
   public final static String PHOENIX_FILE_PARSER = "com.salesforce.scoot.parser.HBasePhoenixXMLParser";
 
-
-  //TODO: these are just for my local hbase, change to be determined externally (e.g. by the pom)
-  static final String hbaseConfDir = "HBASE_CONF_DIR=/tmp/localhbase/conf";
-  static final String hbaseShellPath = "/home/ivarley/dev/tools/Linux/hbase/hbase-0.94.0-SNAPSHOT-security/bin/";
+  static final String hbaseConfDir = System.getProperty("localHBaseConfDir");
+  static final String hbaseShellPath = System.getProperty("localHBaseShellPath");
 
   /**
    * Clear out all schema in the given cluster
@@ -95,7 +97,7 @@ public class ScootTestUtils {
     String testOutputName = "generateAndRunDiffTest_" + String.valueOf(System.currentTimeMillis()) + ".rb";
     try {
       runScootAndWriteFile(fromSchemaFile, fromSchemaType, toSchemaFile, toSchemaType, testOutputName);
-      runShellCommand(hbaseConfDir + " " + hbaseShellPath + "hbase shell " + testOutputName);
+      runShellCommand("HBASE_CONF_DIR=" + hbaseConfDir + " " + hbaseShellPath + "hbase shell " + testOutputName);
     } finally {
       deleteFile(testOutputName);
     }
@@ -177,5 +179,11 @@ public class ScootTestUtils {
     } finally {
       shellIn.close();
     }
+  }
+  
+  static HBaseAdmin getHBaseAdmin(String zkQuorum) throws Exception {
+    Configuration config = HBaseConfiguration.create();
+    config.set("hbase.zookeeper.quorum", zkQuorum);
+	return new HBaseAdmin(config);
   }
 }

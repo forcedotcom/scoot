@@ -73,6 +73,7 @@ public class HBaseScootXMLParser extends HBaseSchemaParser {
     propertyNames.put("maxFileSizeMB", HBaseSchemaAttribute.MAX_FILESIZE.name());
     propertyNames.put("memStoreFlushSizeMB", HBaseSchemaAttribute.MEMSTORE_FLUSHSIZE.name());
     propertyNames.put("owner", HBaseSchemaAttribute.OWNER.name());
+    propertyNames.put("numRegionsToPreSplitOnCreation", HBaseSchemaAttribute.NUMREGIONS.name());
     // column family
     propertyNames.put("blockCache", HBaseSchemaAttribute.BLOCKCACHE.name());
     propertyNames.put("blockSizeKB", HBaseSchemaAttribute.BLOCKSIZE.name());

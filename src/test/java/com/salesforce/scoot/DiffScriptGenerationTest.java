@@ -25,6 +25,9 @@
  */
 package com.salesforce.scoot;
 
+import static org.junit.Assert.assertEquals;
+
+import org.apache.hadoop.hbase.util.Bytes;
 import org.junit.Test;
 
 /**
@@ -45,6 +48,33 @@ public class DiffScriptGenerationTest {
         "src/test/resources/DiffScriptGenerationTestB.xml",
         null, //ScootTestUtils.SCOOT_FILE_PARSER,
         "src/test/resources/DiffScriptGenerationTestResultAB.rb");
+  }
+
+  /**
+   * Test that if you tell it to presplit a table, it scripts it correctly  
+   */
+  @Test
+  public void testScriptPresplit() throws Exception {
+    ScootTestUtils.clearAllTables("localhost:2181");
+    
+    // generate a single table with presplit
+    ScootTestUtils.generateAndCompareDiffTest(
+            "src/test/resources/EmptySchema.xml",
+            ScootTestUtils.SCOOT_FILE_PARSER,
+            "src/test/resources/DiffScriptGenerationTestC.xml", 
+            ScootTestUtils.SCOOT_FILE_PARSER,
+            "src/test/resources/DiffScriptGenerationTestResultC.rb");
+
+    // run it
+    ScootTestUtils.generateAndRunDiffTest(
+            "localhost:2181",
+            ScootTestUtils.CLUSTER_PARSER,
+            "src/test/resources/DiffScriptGenerationTestC.xml",
+            ScootTestUtils.SCOOT_FILE_PARSER);
+    
+    // verify that the cluster now has the "createMe" table with the right number of regions
+    assertEquals("Invalid number of regions", 12, ScootTestUtils.getHBaseAdmin("localhost:2181").getTableRegions(Bytes.toBytes("createMe")).size());
+    
   }
 
   /**

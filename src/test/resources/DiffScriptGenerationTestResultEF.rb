@@ -24,6 +24,7 @@ import org.apache.hadoop.hbase.HConstants
 import org.apache.hadoop.hbase.HTableDescriptor
 import org.apache.hadoop.hbase.client.HBaseAdmin
 import org.apache.hadoop.hbase.client.HTable
+import org.apache.hadoop.hbase.util.Bytes
 
 conf = HBaseConfiguration.new
 admin = HBaseAdmin.new(conf)

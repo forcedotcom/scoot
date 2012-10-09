@@ -38,6 +38,7 @@ import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
 import org.apache.hadoop.hbase.util.Bytes;
 
+import com.salesforce.scoot.HBaseSchemaAttribute;
 import com.salesforce.scoot.HBaseSchemaDiff;
 import com.salesforce.scoot.HBaseSchemaDiff.ChangeType;
 import com.salesforce.scoot.HBaseSchemaDiff.HBaseSchemaChange;
@@ -128,6 +129,7 @@ public class HBaseRubySchemaPatchScripter {
     s("import org.apache.hadoop.hbase.HTableDescriptor");
     s("import org.apache.hadoop.hbase.client.HBaseAdmin");
     s("import org.apache.hadoop.hbase.client.HTable");
+    s("import org.apache.hadoop.hbase.util.Bytes");
     s("");
     s("conf = HBaseConfiguration.new");
     s("admin = HBaseAdmin.new(conf)");
@@ -297,7 +299,13 @@ public class HBaseRubySchemaPatchScripter {
       s("table.addFamily(cf)");
     }
     s("puts \"Creating table '#{tablename}' ... \"");
-    s("admin.createTable(table)");
+    
+    // If we need to pre-split, that's a special method call
+    if (newTable.getValue(HBaseSchemaAttribute.NUMREGIONS.name()) != null){
+    	s("admin.createTable(table, Bytes.toBytes(\"\\x00\"), Bytes.toBytes(\"\\xFF\"), " + newTable.getValue(HBaseSchemaAttribute.NUMREGIONS.name()) + ")");
+    } else {
+    	s("admin.createTable(table)");
+    }
     s("puts \"Created table '#{tablename}'\"");
     s("");
   }

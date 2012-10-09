@@ -54,6 +54,9 @@ public enum HBaseSchemaAttribute {
       null, null),
   READONLY(HTableDescriptor.READONLY, HTableDescriptor.class, Boolean.class, 
       String.valueOf(HTableDescriptor.DEFAULT_READONLY), null),
+  // NUMREGIONS and SPLITALGO aren't proper table attributes, but are used when pre-splitting a table
+  NUMREGIONS("NUMREGIONS", HTableDescriptor.class, Integer.class, null, null),
+  SPLITALGO("SPLITALGO", HTableDescriptor.class, String.class, null, null),
   
   /* Column families */
   BLOCKCACHE(HColumnDescriptor.BLOCKCACHE, HColumnDescriptor.class, Boolean.class, 

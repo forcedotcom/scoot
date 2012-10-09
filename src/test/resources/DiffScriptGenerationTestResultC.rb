@@ -4,7 +4,7 @@
 # Summary:
 #
 #  * Create 1 table:
-#       PHOENIX_TEST
+#       createMe
 #
 #  * Alter 0 tables.
 #
@@ -49,8 +49,8 @@ end
 # script fail; it will emit errors and exit if it encounters any problems that
 # will make the script fail.
 ###############################################################################
-# Table 'PHOENIX_TEST' should not exist
-tablename = "PHOENIX_TEST"
+# Table 'createMe' should not exist
+tablename = "createMe"
 if admin.tableExists(tablename)
     preErrors << "Table '#{tablename}' should not already exist, but it does.\n"
 end
@@ -76,31 +76,20 @@ end
 # This step actually modifies the schema on the cluster.
 ###############################################################################
 
-# Create Table: PHOENIX_TEST
-tablename = "PHOENIX_TEST"
+# Create Table: createMe
+tablename = "createMe"
 table = HTableDescriptor.new(tablename)
 #set table properties
 table.setValue("DEFERRED_LOG_FLUSH", "false")
 table.setValue("IS_META", "false")
 table.setValue("IS_ROOT", "false")
-table.setValue("MAX_FILESIZE", "10737418240")
-table.setValue("MEMSTORE_FLUSHSIZE", "134217728")
+table.setValue("MAX_FILESIZE", "268435456")
+table.setValue("MEMSTORE_FLUSHSIZE", "67108864")
+table.setValue("NUMREGIONS", "12")
+table.setValue("OWNER", "ivarley")
 table.setValue("READONLY", "false")
-cf = HColumnDescriptor.new("1")
-cf.setValue("BLOCKCACHE", "true")
-cf.setValue("BLOCKSIZE", "65536")
-cf.setValue("BLOOMFILTER", "NONE")
-cf.setValue("COMPRESSION", "NONE")
-cf.setValue("DATA_BLOCK_ENCODING", "NONE")
-cf.setValue("ENCODE_ON_DISK", "true")
-cf.setValue("IN_MEMORY", "false")
-cf.setValue("KEEP_DELETED_CELLS", "false")
-cf.setValue("MIN_VERSIONS", "0")
-cf.setValue("REPLICATION_SCOPE", "0")
-cf.setValue("TTL", "2147483647")
-cf.setValue("VERSIONS", "3")
-table.addFamily(cf)
-cf = HColumnDescriptor.new("2")
+table.setValue("fullSchema", "<table isReadOnly=\"false\" maxFileSizeMB=\"256\" memStoreFlushSizeMB=\"64\" name=\"createMe\" numRegionsToPreSplitOnCreation=\"12\" owner=\"ivarley\" useDeferredLogFlush=\"false\"><key><keyPart inverted=\"false\" length=\"15\" name=\"createMeKeyPart1\" type=\"String\"/><keyPart inverted=\"true\" length=\"15\" name=\"createMeKeyPart2\" type=\"Timestamp\"/></key><columnFamilies><columnFamily blockCache=\"true\" blockSizeKB=\"64\" bloomFilter=\"NONE\" inMemory=\"false\" maxVersions=\"3\" name=\"createMeColumnFamily1\" replicationScope=\"0\" timeToLiveMS=\"2147483647\"><column name=\"createMeColumn1\" type=\"String\"/><column name=\"createMeColumn2\" type=\"Timestamp\"/><column name=\"createMeColumn3\" type=\"Byte\"/></columnFamily></columnFamilies></table>")
+cf = HColumnDescriptor.new("createMeColumnFamily1")
 cf.setValue("BLOCKCACHE", "true")
 cf.setValue("BLOCKSIZE", "65536")
 cf.setValue("BLOOMFILTER", "NONE")
@@ -115,7 +104,7 @@ cf.setValue("TTL", "2147483647")
 cf.setValue("VERSIONS", "3")
 table.addFamily(cf)
 puts "Creating table '#{tablename}' ... "
-admin.createTable(table)
+admin.createTable(table, Bytes.toBytes("\x00"), Bytes.toBytes("\xFF"), 12)
 puts "Created table '#{tablename}'"
 
 puts "Table creations & modifications successful."
@@ -126,37 +115,26 @@ puts "Table creations & modifications successful."
 # This step ensures that changes were successful, and that the resulting schema
 # on the cluster matches what you want to be there.
 ###############################################################################
-# Table 'PHOENIX_TEST' should exist
-tablename = "PHOENIX_TEST"
+# Table 'createMe' should exist
+tablename = "createMe"
 if !admin.tableExists(tablename)
     preErrors << "Table '#{tablename}' should exist, but it does not.\n"
 end
 
-# Table 'PHOENIX_TEST' will error if it doesn't match the expected definition.
+# Table 'createMe' will error if it doesn't match the expected definition.
 if admin.tableExists(tablename)
     table = admin.getTableDescriptor(tablename.bytes.to_a)
     compare(preErrors, table, "create", "DEFERRED_LOG_FLUSH", "false")
     compare(preErrors, table, "create", "IS_META", "false")
     compare(preErrors, table, "create", "IS_ROOT", "false")
-    compare(preErrors, table, "create", "MAX_FILESIZE", "10737418240")
-    compare(preErrors, table, "create", "MEMSTORE_FLUSHSIZE", "134217728")
+    compare(preErrors, table, "create", "MAX_FILESIZE", "268435456")
+    compare(preErrors, table, "create", "MEMSTORE_FLUSHSIZE", "67108864")
+    compare(preErrors, table, "create", "NUMREGIONS", "12")
+    compare(preErrors, table, "create", "OWNER", "ivarley")
     compare(preErrors, table, "create", "READONLY", "false")
-    # Column family: 1
-    cf = HColumnDescriptor.new("1")
-    compare(preErrors, cf, "create", "BLOCKCACHE", "true")
-    compare(preErrors, cf, "create", "BLOCKSIZE", "65536")
-    compare(preErrors, cf, "create", "BLOOMFILTER", "NONE")
-    compare(preErrors, cf, "create", "COMPRESSION", "NONE")
-    compare(preErrors, cf, "create", "DATA_BLOCK_ENCODING", "NONE")
-    compare(preErrors, cf, "create", "ENCODE_ON_DISK", "true")
-    compare(preErrors, cf, "create", "IN_MEMORY", "false")
-    compare(preErrors, cf, "create", "KEEP_DELETED_CELLS", "false")
-    compare(preErrors, cf, "create", "MIN_VERSIONS", "0")
-    compare(preErrors, cf, "create", "REPLICATION_SCOPE", "0")
-    compare(preErrors, cf, "create", "TTL", "2147483647")
-    compare(preErrors, cf, "create", "VERSIONS", "3")
-    # Column family: 2
-    cf = HColumnDescriptor.new("2")
+    compare(preErrors, table, "create", "fullSchema", "<table isReadOnly=\"false\" maxFileSizeMB=\"256\" memStoreFlushSizeMB=\"64\" name=\"createMe\" numRegionsToPreSplitOnCreation=\"12\" owner=\"ivarley\" useDeferredLogFlush=\"false\"><key><keyPart inverted=\"false\" length=\"15\" name=\"createMeKeyPart1\" type=\"String\"/><keyPart inverted=\"true\" length=\"15\" name=\"createMeKeyPart2\" type=\"Timestamp\"/></key><columnFamilies><columnFamily blockCache=\"true\" blockSizeKB=\"64\" bloomFilter=\"NONE\" inMemory=\"false\" maxVersions=\"3\" name=\"createMeColumnFamily1\" replicationScope=\"0\" timeToLiveMS=\"2147483647\"><column name=\"createMeColumn1\" type=\"String\"/><column name=\"createMeColumn2\" type=\"Timestamp\"/><column name=\"createMeColumn3\" type=\"Byte\"/></columnFamily></columnFamilies></table>")
+    # Column family: createMeColumnFamily1
+    cf = HColumnDescriptor.new("createMeColumnFamily1")
     compare(preErrors, cf, "create", "BLOCKCACHE", "true")
     compare(preErrors, cf, "create", "BLOCKSIZE", "65536")
     compare(preErrors, cf, "create", "BLOOMFILTER", "NONE")
