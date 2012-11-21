@@ -141,7 +141,8 @@ if admin.tableExists(tablename)
     compare(preErrors, table, "create", "MEMSTORE_FLUSHSIZE", "134217728")
     compare(preErrors, table, "create", "READONLY", "false")
     # Column family: 1
-    cf = HColumnDescriptor.new("1")
+    cfname = "1"
+    cf = table.getFamily(cfname.bytes.to_a)
     compare(preErrors, cf, "create", "BLOCKCACHE", "true")
     compare(preErrors, cf, "create", "BLOCKSIZE", "65536")
     compare(preErrors, cf, "create", "BLOOMFILTER", "NONE")
@@ -155,7 +156,8 @@ if admin.tableExists(tablename)
     compare(preErrors, cf, "create", "TTL", "2147483647")
     compare(preErrors, cf, "create", "VERSIONS", "3")
     # Column family: 2
-    cf = HColumnDescriptor.new("2")
+    cfname = "2"
+    cf = table.getFamily(cfname.bytes.to_a)
     compare(preErrors, cf, "create", "BLOCKCACHE", "true")
     compare(preErrors, cf, "create", "BLOCKSIZE", "65536")
     compare(preErrors, cf, "create", "BLOOMFILTER", "NONE")

@@ -66,7 +66,8 @@ if admin.tableExists(tablename)
     compare(preWarnings, table, "drop", "READONLY", "false")
     compare(preWarnings, table, "drop", "fullSchema", "<table isReadOnly=\"false\" maxFileSizeMB=\"256\" memStoreFlushSizeMB=\"64\" name=\"createMe\" owner=\"ivarley\" useDeferredLogFlush=\"false\"><key><keyPart inverted=\"false\" length=\"15\" name=\"createMeKeyPart1\" type=\"String\"/><keyPart inverted=\"true\" length=\"15\" name=\"createMeKeyPart2\" type=\"Timestamp\"/></key><columnFamilies><columnFamily blockCache=\"true\" blockSizeKB=\"64\" bloomFilter=\"NONE\" inMemory=\"false\" maxVersions=\"3\" name=\"createMeColumnFamily1\" replicationScope=\"0\" timeToLiveMS=\"2147483647\"><column name=\"createMeColumn1\" type=\"String\"/><column name=\"createMeColumn2\" type=\"Timestamp\"/><column name=\"createMeColumn3\" type=\"Byte\"/></columnFamily></columnFamilies></table>")
     # Column family: createMeColumnFamily1
-    cf = HColumnDescriptor.new("createMeColumnFamily1")
+    cfname = "createMeColumnFamily1"
+    cf = table.getFamily(cfname.bytes.to_a)
     compare(preWarnings, cf, "drop", "BLOCKCACHE", "true")
     compare(preWarnings, cf, "drop", "BLOCKSIZE", "65536")
     compare(preWarnings, cf, "drop", "BLOOMFILTER", "NONE")

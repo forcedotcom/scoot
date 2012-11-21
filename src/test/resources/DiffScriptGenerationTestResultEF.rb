@@ -66,7 +66,8 @@ if admin.tableExists(tablename)
     compare(preErrors, table, "alter", "READONLY", "false")
     compare(preErrors, table, "alter", "fullSchema", "<table name=\"minimal\"><columnFamilies><columnFamily name=\"minimalColumnFamily1\"></columnFamily></columnFamilies></table>")
     # Column family: minimalColumnFamily1
-    cf = HColumnDescriptor.new("minimalColumnFamily1")
+    cfname = "minimalColumnFamily1"
+    cf = table.getFamily(cfname.bytes.to_a)
     compare(preErrors, cf, "alter", "BLOCKCACHE", "true")
     compare(preErrors, cf, "alter", "BLOCKSIZE", "65536")
     compare(preErrors, cf, "alter", "BLOOMFILTER", "NONE")
@@ -159,7 +160,8 @@ if admin.tableExists(tablename)
     compare(preErrors, table, "alter", "READONLY", "false")
     compare(preErrors, table, "alter", "fullSchema", "<table isReadOnly=\"false\" maxFileSizeMB=\"10240\" memStoreFlushSizeMB=\"128\" name=\"minimal\" useDeferredLogFlush=\"false\"><columnFamilies><columnFamily blockCache=\"true\" blockSizeKB=\"64\" bloomFilter=\"NONE\" inMemory=\"false\" maxVersions=\"3\" name=\"minimalColumnFamily1\" replicationScope=\"0\" timeToLiveMS=\"2147483647\"></columnFamily></columnFamilies></table>")
     # Column family: minimalColumnFamily1
-    cf = HColumnDescriptor.new("minimalColumnFamily1")
+    cfname = "minimalColumnFamily1"
+    cf = table.getFamily(cfname.bytes.to_a)
     compare(preErrors, cf, "alter", "BLOCKCACHE", "true")
     compare(preErrors, cf, "alter", "BLOCKSIZE", "65536")
     compare(preErrors, cf, "alter", "BLOOMFILTER", "NONE")

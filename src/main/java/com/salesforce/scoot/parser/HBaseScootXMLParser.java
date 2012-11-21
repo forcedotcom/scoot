@@ -78,6 +78,8 @@ public class HBaseScootXMLParser extends HBaseSchemaParser {
     propertyNames.put("blockSizeKB", HBaseSchemaAttribute.BLOCKSIZE.name());
     propertyNames.put("bloomFilter", HBaseSchemaAttribute.BLOOMFILTER.name());
     propertyNames.put("inMemory", HBaseSchemaAttribute.IN_MEMORY.name());
+    propertyNames.put("keepDeletedCells", HBaseSchemaAttribute.KEEP_DELETED_CELLS.name());
+    propertyNames.put("minVersions", HBaseSchemaAttribute.MIN_VERSIONS.name());
     propertyNames.put("maxVersions", HBaseSchemaAttribute.VERSIONS.name());
     propertyNames.put("replicationScope", HBaseSchemaAttribute.REPLICATION_SCOPE.name());
     propertyNames.put("timeToLiveMS", HBaseSchemaAttribute.TTL.name());
