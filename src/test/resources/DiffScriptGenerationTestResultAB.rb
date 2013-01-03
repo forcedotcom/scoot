@@ -75,7 +75,8 @@ if admin.tableExists(tablename)
     compare(preWarnings, table, "drop", "READONLY", "false")
     compare(preWarnings, table, "drop", "fullSchema", "<table isReadOnly=\"false\" maxFileSizeMB=\"256\" memStoreFlushSizeMB=\"64\" name=\"dropMe\" owner=\"ivarley\" useDeferredLogFlush=\"false\"><key><keyPart inverted=\"false\" length=\"15\" name=\"dropMeKeyPart1\" type=\"String\"/><keyPart inverted=\"true\" length=\"15\" name=\"dropMeKeyPart2\" type=\"Timestamp\"/></key><columnFamilies><columnFamily blockCache=\"true\" blockSizeKB=\"64\" bloomFilter=\"NONE\" inMemory=\"false\" maxVersions=\"3\" name=\"dropMeColumnFamily1\" replicationScope=\"0\" timeToLiveMS=\"2147483647\"><column name=\"dropMeColumn1\" type=\"String\"/><column name=\"dropMeColumn2\" type=\"Timestamp\"/><column name=\"dropMeColumn3\" type=\"Byte\"/></columnFamily></columnFamilies></table>")
     # Column family: dropMeColumnFamily1
-    cf = HColumnDescriptor.new("dropMeColumnFamily1")
+    cfname = "dropMeColumnFamily1"
+    cf = table.getFamily(cfname.bytes.to_a)
     compare(preWarnings, cf, "drop", "BLOCKCACHE", "true")
     compare(preWarnings, cf, "drop", "BLOCKSIZE", "65536")
     compare(preWarnings, cf, "drop", "BLOOMFILTER", "NONE")
@@ -114,7 +115,8 @@ if admin.tableExists(tablename)
     compare(preErrors, table, "alter", "READONLY", "false")
     compare(preErrors, table, "alter", "fullSchema", "<table isReadOnly=\"false\" maxFileSizeMB=\"256\" memStoreFlushSizeMB=\"64\" name=\"alterMe\" owner=\"ivarley\" useDeferredLogFlush=\"false\"><key><keyPart inverted=\"false\" length=\"15\" name=\"alterMeKeyPart1\" type=\"String\"/><keyPart inverted=\"true\" length=\"15\" name=\"alterMeKeyPart2\" type=\"Timestamp\"/></key><columnFamilies><columnFamily blockCache=\"true\" blockSizeKB=\"64\" bloomFilter=\"NONE\" inMemory=\"false\" maxVersions=\"3\" name=\"alterMeColumnFamily1\" replicationScope=\"0\" timeToLiveMS=\"2147483647\"><column name=\"alterMeColumn1\" type=\"String\"/><column name=\"alterMeColumn2\" type=\"Timestamp\"/><column name=\"alterMeColumn3\" type=\"Byte\"/></columnFamily></columnFamilies></table>")
     # Column family: alterMeColumnFamily1
-    cf = HColumnDescriptor.new("alterMeColumnFamily1")
+    cfname = "alterMeColumnFamily1"
+    cf = table.getFamily(cfname.bytes.to_a)
     compare(preErrors, cf, "alter", "BLOCKCACHE", "true")
     compare(preErrors, cf, "alter", "BLOCKSIZE", "65536")
     compare(preErrors, cf, "alter", "BLOOMFILTER", "NONE")
@@ -258,7 +260,8 @@ if admin.tableExists(tablename)
     compare(preErrors, table, "create", "READONLY", "false")
     compare(preErrors, table, "create", "fullSchema", "<table isReadOnly=\"false\" maxFileSizeMB=\"256\" memStoreFlushSizeMB=\"64\" name=\"createMe\" owner=\"ivarley\" useDeferredLogFlush=\"false\"><key><keyPart inverted=\"false\" length=\"15\" name=\"createMeKeyPart1\" type=\"String\"/><keyPart inverted=\"true\" length=\"15\" name=\"createMeKeyPart2\" type=\"Timestamp\"/></key><columnFamilies><columnFamily blockCache=\"true\" blockSizeKB=\"64\" bloomFilter=\"NONE\" inMemory=\"false\" maxVersions=\"3\" name=\"createMeColumnFamily1\" replicationScope=\"0\" timeToLiveMS=\"2147483647\"><column name=\"createMeColumn1\" type=\"String\"/><column name=\"createMeColumn2\" type=\"Timestamp\"/><column name=\"createMeColumn3\" type=\"Byte\"/></columnFamily></columnFamilies></table>")
     # Column family: createMeColumnFamily1
-    cf = HColumnDescriptor.new("createMeColumnFamily1")
+    cfname = "createMeColumnFamily1"
+    cf = table.getFamily(cfname.bytes.to_a)
     compare(preErrors, cf, "create", "BLOCKCACHE", "true")
     compare(preErrors, cf, "create", "BLOCKSIZE", "65536")
     compare(preErrors, cf, "create", "BLOOMFILTER", "NONE")
@@ -291,7 +294,8 @@ if admin.tableExists(tablename)
     compare(preErrors, table, "alter", "READONLY", "false")
     compare(preErrors, table, "alter", "fullSchema", "<table isReadOnly=\"false\" maxFileSizeMB=\"257\" memStoreFlushSizeMB=\"65\" name=\"alterMe\" owner=\"ivarley2\" useDeferredLogFlush=\"false\"><key><keyPart inverted=\"false\" length=\"15\" name=\"alterMeKeyPart1\" type=\"String\"/><keyPart inverted=\"true\" length=\"15\" name=\"alterMeKeyPart2\" type=\"Timestamp\"/></key><columnFamilies><columnFamily blockCache=\"true\" blockSizeKB=\"65\" bloomFilter=\"NONE\" inMemory=\"false\" maxVersions=\"3\" name=\"alterMeColumnFamily1\" replicationScope=\"0\" timeToLiveMS=\"2147483647\"><column name=\"alterMeColumn1\" type=\"String\"/><column name=\"alterMeColumn2\" type=\"Timestamp\"/><column name=\"alterMeColumn3\" type=\"Byte\"/></columnFamily></columnFamilies></table>")
     # Column family: alterMeColumnFamily1
-    cf = HColumnDescriptor.new("alterMeColumnFamily1")
+    cfname = "alterMeColumnFamily1"
+    cf = table.getFamily(cfname.bytes.to_a)
     compare(preErrors, cf, "alter", "BLOCKCACHE", "true")
     compare(preErrors, cf, "alter", "BLOCKSIZE", "66560")
     compare(preErrors, cf, "alter", "BLOOMFILTER", "NONE")

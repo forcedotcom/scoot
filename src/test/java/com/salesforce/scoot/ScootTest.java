@@ -27,9 +27,17 @@ package com.salesforce.scoot;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import org.apache.hadoop.hbase.util.Bytes;
+import java.net.URL;
+import java.util.List;
 
 import junit.framework.TestCase;
+
+import org.apache.hadoop.hbase.HColumnDescriptor;
+import org.apache.hadoop.hbase.HTableDescriptor;
+import org.apache.hadoop.hbase.util.Bytes;
+
+import com.google.common.io.Resources;
+import com.salesforce.scoot.parser.HBaseScootXMLParser;
 
 /**
  * General tests for scoot functionality
@@ -64,5 +72,43 @@ public class ScootTest extends TestCase {
       System.setOut(originalStdOut);
     }
     
+  }
+  
+  public void testParse() throws Exception {
+	URL xmlFile = Resources.getResource("ScootXMLParserTest.xml");
+	String fileName = xmlFile.getFile();
+	HBaseScootXMLParser parser = new HBaseScootXMLParser();
+	parser.setResourceToParse(fileName);
+	HBaseSchema schema = parser.parse();
+	  
+	List<HTableDescriptor> tables = schema.getTables();
+	assertEquals(1, tables.size());
+	
+	// Test table attributes
+	HTableDescriptor table = tables.get(0);
+	assertEquals("testMe", table.getNameAsString());
+	assertEquals("536870912", table.getValue(HBaseSchemaAttribute.MAX_FILESIZE.name()));
+	assertEquals("true", table.getValue(HBaseSchemaAttribute.READONLY.name()));
+	assertEquals("128974848", table.getValue(HBaseSchemaAttribute.MEMSTORE_FLUSHSIZE.name()));
+	assertEquals("true", table.getValue(HBaseSchemaAttribute.DEFERRED_LOG_FLUSH.name()));
+	assertEquals("ivarley", table.getOwnerString());
+	
+	HColumnDescriptor[] columnFamilies = table.getColumnFamilies();
+	assertNotNull(columnFamilies);
+	assertEquals(1, columnFamilies.length);
+	
+	// Test column family attributes
+	HColumnDescriptor columnFamily = columnFamilies[0];
+	assertEquals("testMeColumnFamily1", columnFamily.getNameAsString());
+	assertEquals("10", columnFamily.getValue(HBaseSchemaAttribute.VERSIONS.name()));
+	assertEquals("32768", columnFamily.getValue(HBaseSchemaAttribute.BLOCKSIZE.name()));
+	assertEquals("false", columnFamily.getValue(HBaseSchemaAttribute.BLOCKCACHE.name()));
+	assertEquals("123456789", columnFamily.getValue(HBaseSchemaAttribute.TTL.name()));
+	assertEquals("true", columnFamily.getValue(HBaseSchemaAttribute.IN_MEMORY.name()));
+	assertEquals("ROW", columnFamily.getValue(HBaseSchemaAttribute.BLOOMFILTER.name()));
+	assertEquals("true", columnFamily.getValue(HBaseSchemaAttribute.KEEP_DELETED_CELLS.name()));
+	assertEquals("5", columnFamily.getValue(HBaseSchemaAttribute.MIN_VERSIONS.name()));
+	assertEquals("1", columnFamily.getValue(HBaseSchemaAttribute.REPLICATION_SCOPE.name()));
+	
   }
 }

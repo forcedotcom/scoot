@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<schema>
+
+    <table name="testMe" 
+        maxFileSizeMB="512" 
+        isReadOnly="true"
+        memStoreFlushSizeMB="123"
+        useDeferredLogFlush="true"
+        owner="ivarley">
+
+        <columnFamilies>
+	        <columnFamily name="testMeColumnFamily1" 
+	            maxVersions="10" 
+	            blockSizeKB="32" 
+	            blockCache="false" 
+	            timeToLiveMS="123456789" 
+	            inMemory="true" 
+	            bloomFilter="ROW" 
+	            keepDeletedCells="true"
+	            minVersions="5"
+	            replicationScope="1" />
+        </columnFamilies>
+    </table>
+   
+</schema>

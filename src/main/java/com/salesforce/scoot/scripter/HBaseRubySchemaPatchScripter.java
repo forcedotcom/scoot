@@ -225,7 +225,8 @@ public class HBaseRubySchemaPatchScripter {
     // now descend into child objects
     for (HColumnDescriptor c : oldTable.getColumnFamilies()){
       s("    # Column family: " + c.getNameAsString());
-      s("    cf = HColumnDescriptor.new(\"" + c.getNameAsString() + "\")");
+      s("    cfname = \"" + c.getNameAsString() + "\"");
+      s("    cf = table.getFamily(cfname.bytes.to_a)");
 
       for (Entry<String,String> p : getSortedStringEntries(c.getValues())){
         s("    compare(" + errorCollectionName + ", cf, \"" + operationName + "\", \"" + p.getKey() + "\", \"" + escapeDoubleQuotes(p.getValue()) + "\")");
