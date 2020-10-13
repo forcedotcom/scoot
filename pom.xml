@@ -16,7 +16,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <hbase.version>0.94.0</hbase.version>
-    <junit.version>4.10</junit.version>
+    <junit.version>4.13.1</junit.version>
     <hadoop.version>1.0.2</hadoop.version>
 
     <!-- Build properties -->
